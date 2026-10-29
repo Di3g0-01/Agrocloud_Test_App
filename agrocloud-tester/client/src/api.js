@@ -1,5 +1,8 @@
 // Cliente de API REST para AgroCloud Tester
-const BASE_URL = import.meta.env.VITE_API_URL || '';
+const rawUrl = (import.meta.env.VITE_API_URL || '').trim();
+const BASE_URL = rawUrl
+  ? (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://') ? `https://${rawUrl}` : rawUrl).replace(/\/+$/, '')
+  : '';
 
 async function handleResponse(res) {
   let data = {};
