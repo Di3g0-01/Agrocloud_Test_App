@@ -1,4 +1,5 @@
 // Cliente de API REST para AgroCloud Tester
+const BASE_URL = import.meta.env.VITE_API_URL || '';
 
 async function handleResponse(res) {
   let data = {};
@@ -16,12 +17,12 @@ async function handleResponse(res) {
 export const api = {
   // Conexión
   async getConnection() {
-    const res = await fetch('/api/connection');
+    const res = await fetch(`${BASE_URL}/api/connection`);
     return handleResponse(res);
   },
 
   async setConnection(config) {
-    const res = await fetch('/api/connection', {
+    const res = await fetch(`${BASE_URL}/api/connection`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(config)
@@ -31,33 +32,33 @@ export const api = {
 
   // Health
   async getHealth() {
-    const res = await fetch('/api/health');
+    const res = await fetch(`${BASE_URL}/api/health`);
     return handleResponse(res);
   },
 
   // Tablas
   async getTables() {
-    const res = await fetch('/api/tables');
+    const res = await fetch(`${BASE_URL}/api/tables`);
     return handleResponse(res);
   },
 
   async getTableMeta(tableName) {
-    const res = await fetch(`/api/tables/${encodeURIComponent(tableName)}/meta`);
+    const res = await fetch(`${BASE_URL}/api/tables/${encodeURIComponent(tableName)}/meta`);
     return handleResponse(res);
   },
 
   async getTableRows(tableName, limit = 50, offset = 0) {
-    const res = await fetch(`/api/tables/${encodeURIComponent(tableName)}/rows?limit=${limit}&offset=${offset}`);
+    const res = await fetch(`${BASE_URL}/api/tables/${encodeURIComponent(tableName)}/rows?limit=${limit}&offset=${offset}`);
     return handleResponse(res);
   },
 
   async getTableOptions(tableName) {
-    const res = await fetch(`/api/tables/${encodeURIComponent(tableName)}/options`);
+    const res = await fetch(`${BASE_URL}/api/tables/${encodeURIComponent(tableName)}/options`);
     return handleResponse(res);
   },
 
   async insertTableRow(tableName, data) {
-    const res = await fetch(`/api/tables/${encodeURIComponent(tableName)}/rows`, {
+    const res = await fetch(`${BASE_URL}/api/tables/${encodeURIComponent(tableName)}/rows`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -66,7 +67,7 @@ export const api = {
   },
 
   async deleteTableRow(tableName, id) {
-    const res = await fetch(`/api/tables/${encodeURIComponent(tableName)}/rows/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${BASE_URL}/api/tables/${encodeURIComponent(tableName)}/rows/${encodeURIComponent(id)}`, {
       method: 'DELETE'
     });
     return handleResponse(res);
@@ -74,7 +75,7 @@ export const api = {
 
   // Mantenimiento
   async resetTables() {
-    const res = await fetch('/api/reset', {
+    const res = await fetch(`${BASE_URL}/api/reset`, {
       method: 'POST'
     });
     return handleResponse(res);
